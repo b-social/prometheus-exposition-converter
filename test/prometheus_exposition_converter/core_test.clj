@@ -105,7 +105,7 @@
         (is (= "400" (get-in http-requests-total-metrics-last [:labels "status"])))
         (is (= "4XX" (get-in http-requests-total-metrics-last [:labels "statusClass"])))))))
 
-(deftest test-process-prometheus-exposition-success
+(deftest test-process-prometheus-exposition-bad-file
   (let [walker (CljMapPrometheusMetricsWalker.)
         exposition (io/input-stream "test_resources/bad.txt")
         output (.getResult (process exposition walker))]
