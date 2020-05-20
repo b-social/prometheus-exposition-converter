@@ -1,5 +1,5 @@
 (defproject prometheus-exposition-converter
-  "0.1.0-SNAPSHOT"
+  "0.1.0"
 
   :description "Convert promtheus exposition format to a a various other formats"
 
