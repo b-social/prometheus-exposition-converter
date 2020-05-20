@@ -1,14 +1,14 @@
 (defproject prometheus-exposition-converter
   "0.1.0-SNAPSHOT"
-  
+
   :description "Convert promtheus exposition format to a a various other formats"
 
   :url "https://github.com/b-social/prometheus-exposition-converter"
 
   :license {:name "MIT"
-            :url "https://opensource.org/licenses/MIT"}
+            :url  "https://opensource.org/licenses/MIT"}
 
-  :dependencies [[org.clojure/clojure "1.10.0"]
+  :dependencies [[org.clojure/clojure "1.10.1"]
                  [org.hawkular.agent/prometheus-scraper "0.23.0.Final"]]
 
   :plugins [[lein-cloverage "1.0.13"]
@@ -23,8 +23,10 @@
 
   :aot :all
 
-  :profiles {:test {:resource-paths ["test_resources"]}}
-  
+  :profiles {:test           {:dependencies
+                              [[eftest "0.5.8"]]}
+             :resource-paths ["test_resources"]
+             :eftest         {:multithread? false}}
   :cloverage
   {:ns-exclude-regex [#"^user"]}
 
@@ -55,7 +57,7 @@
    ["vcs" "tag"]
    ["vcs" "push"]]
 
-  :aliases {"test"      ["with-profile" "test" ":all"]
+  :aliases {"test"      ["with-profile" "test" "eftest" ":all"]
             "precommit" ["do"
                          ["check"]
                          ["kibit" "--replace"]
