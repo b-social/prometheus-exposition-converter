@@ -1,4 +1,6 @@
 (ns prometheus-exposition-converter.walkers.map
+  "Provides an implementation of org.hawkular.agent.prometheus.walkers.PrometheusMetricsWalker
+  that parses a prometheus exposition and stores it, retrievable under (.getResult)"
   (:import [org.hawkular.agent.prometheus.types MetricFamily Counter Gauge
                                                 Summary Summary$Quantile
                                                 Histogram Histogram$Bucket]
@@ -23,10 +25,15 @@
   (assoc val (.getUpperBound bucket) (.getCumulativeCount bucket)))
 
 (defn -init []
+  "Called when a walk has been started.
+
+  Init function for CljMapPrometheusMetricsWalker"
   [[] (atom {})])
 
 (defn -walkStart
-  "void walkStart()"
+  "void walkStart()
+
+  Called when a walk has been started."
   [this]
   (reset! (.state this) {:metrics            []
                          :current            nil
@@ -35,7 +42,9 @@
                          :metrics-processed  0}))
 
 (defn -walkFinish
-  "void walkFinish(int familiesProcessed, int metricsProcessed)"
+  "void walkFinish(int familiesProcessed, int metricsProcessed)
+
+  Called when a walk has traversed all the metrics."
   [this families-processed metrics-processed]
   (let [state (.state this)
         current (:current @state)]
@@ -47,7 +56,9 @@
         :metrics-processed metrics-processed))))
 
 (defn -walkMetricFamily
-  "void walkMetricFamily(MetricFamily family, int index)"
+  "void walkMetricFamily(MetricFamily family, int index)
+
+  Called when a new metric family is about to be traversed."
   [this ^MetricFamily family index]
   (let [state (.state this)
         name (.getName family)
@@ -64,7 +75,9 @@
       (swap! state assoc :current next))))
 
 (defn -walkCounterMetric
-  "void walkCounterMetric(MetricFamily family, Counter counter, int index)"
+  "void walkCounterMetric(MetricFamily family, Counter counter, int index)
+
+  Called when a new counter metric is found."
   [this ^MetricFamily family ^Counter counter index]
   (let [state (.state this)
         current (:current @state)
@@ -75,7 +88,9 @@
     (swap! current update-in [:metrics] conj metric)))
 
 (defn -walkGaugeMetric
-  "void walkGaugeMetric(MetricFamily family, Gauge gauge, int index)"
+  "void walkGaugeMetric(MetricFamily family, Gauge gauge, int index)
+
+  Called when a new gauge metric is found."
   [this ^MetricFamily family ^Gauge gauge index]
   (let [state (.state this)
         current (:current @state)
@@ -86,7 +101,9 @@
     (swap! current update-in [:metrics] conj metric)))
 
 (defn -walkSummaryMetric
-  "void walkSummaryMetric(MetricFamily family, Summary summary, int index)"
+  "void walkSummaryMetric(MetricFamily family, Summary summary, int index)
+
+  Called when a new summary metric is found."
   [this ^MetricFamily family ^Summary summary index]
   (let [state (.state this)
         current (:current @state)
@@ -101,7 +118,9 @@
     (swap! current update-in [:metrics] conj metric)))
 
 (defn -walkHistogramMetric
-  "void walkHistogramMetric(MetricFamily family, Histogram histogram, int index)"
+  "void walkHistogramMetric(MetricFamily family, Histogram histogram, int index)
+
+  Called when a new histogram metric is found."
   [this ^MetricFamily family ^Histogram histogram index]
   (let [state (.state this)
         current (:current @state)

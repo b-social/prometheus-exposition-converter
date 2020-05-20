@@ -29,11 +29,11 @@
   {:ns-exclude-regex [#"^user"]}
 
   :codox
-  {:namespaces  [#"^liberator-mixin\."]
+  {:namespaces  [#"^prometheus-exposition-converter\."]
    :metadata    {:doc/format :markdown}
    :output-path "docs"
    :doc-paths   ["docs"]
-   :source-uri  "https://github.com/b-social/liberator-mixin/blob/{version}/{filepath}#L{line}"}
+   :source-uri  "https://github.com/b-social/prometheus-exposition-converter/blob/{version}/{filepath}"}
 
   :cljfmt {:indents ^:replace {#".*" [[:inner 0]]}}
 

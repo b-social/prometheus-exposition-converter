@@ -6,8 +6,8 @@
 (defn process
   "Processes the provided prometheus exposition with the provided walker.
   
-  Returns the walker, the result should be fetched from the walker implementation,
-  i.e. (.getResult walker) if using the CljMapPrometheusMetricsWalker."
+  Returns the walker.
+  The result should be fetched from the walker implementation, i.e. (.getResult walker) if using the CljMapPrometheusMetricsWalker."
   [^InputStream input-stream ^PrometheusMetricsWalker walker]
   (let [processor (TextPrometheusMetricsProcessor. input-stream walker)]
     (.walk processor)
