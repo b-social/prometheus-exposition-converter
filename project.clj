@@ -55,7 +55,7 @@
    ["vcs" "tag"]
    ["vcs" "push"]]
 
-  :aliases {"test"      ["with-profile" "test" "eftest" ":all"]
+  :aliases {"test"      ["with-profile" "test" ":all"]
             "precommit" ["do"
                          ["check"]
                          ["kibit" "--replace"]
