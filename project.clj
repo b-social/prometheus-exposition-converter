@@ -1,5 +1,5 @@
 (defproject b-social/prometheus-exposition-converter
-  "0.1.3-SNAPSHOT"
+  "0.1.3"
 
   :description "Convert promtheus exposition format to a a various other formats"
 
