@@ -24,6 +24,13 @@
   [val ^Histogram$Bucket bucket]
   (assoc val (.getUpperBound bucket) (.getCumulativeCount bucket)))
 
+(defn- assoc-current
+  [state]
+  (let [{:keys [current]} @state]
+    (if (some? current)
+      (let [current @current]
+        (swap! state assoc-in [:families (keyword (:name current))] (dissoc current :name))))))
+
 (defn -init []
   "Called when a walk has been started.
 
@@ -35,22 +42,17 @@
 
   Called when a walk has been started."
   [this]
-  (reset! (.state this) {:metrics            []
-                         :current            nil
-                         :processing-time    (.toEpochMilli (Instant/now))
-                         :families-processed 0
-                         :metrics-processed  0}))
+  (reset! (.state this) {:families            {}
+                         :processing-time    (.toEpochMilli (Instant/now))}))
 
 (defn -walkFinish
   "void walkFinish(int familiesProcessed, int metricsProcessed)
 
   Called when a walk has traversed all the metrics."
   [this families-processed metrics-processed]
-  (let [state (.state this)
-        current (:current @state)]
+  (let [state (.state this)]
     (do
-      (if (some? current)
-        (swap! state update-in [:metrics] conj @current))
+      (assoc-current state)
       (swap! state assoc
         :families-processed families-processed
         :metrics-processed metrics-processed))))
@@ -67,11 +69,9 @@
         next (atom {:name    name
                     :help    help
                     :type    type
-                    :metrics []})
-        current (:current @state)]
+                    :metrics []})]
     (do
-      (if (some? current)
-        (swap! state update-in [:metrics] conj @current))
+      (assoc-current state)
       (swap! state assoc :current next))))
 
 (defn -walkCounterMetric
