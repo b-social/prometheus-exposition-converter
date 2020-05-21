@@ -2,7 +2,7 @@
 
 An library to allow the conversion of prometheus expositions to other formats
 
-[![Clojars Project](https://img.shields.io/clojars/v/bsocial/prometheus-exposition-converter.svg)](https://clojars.org/bsocial/prometheus-exposition-converter)
+[![Clojars Project](https://img.shields.io/clojars/v/b-social/prometheus-exposition-converter.svg)](https://clojars.org/b-social/prometheus-exposition-converter)
 
 ## Install
 
