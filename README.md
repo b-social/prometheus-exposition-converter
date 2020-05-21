@@ -2,6 +2,8 @@
 
 An library to allow the conversion of prometheus expositions to other formats
 
+[![Clojars Project](https://img.shields.io/clojars/v/prometheus-exposition-converter.svg)](https://clojars.org/prometheus-exposition-converter)
+
 ## Install
 
 Add the following to your `project.clj` file:
