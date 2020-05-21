@@ -7,7 +7,7 @@ An library to allow the conversion of prometheus expositions to other formats
 Add the following to your `project.clj` file:
 
 ```clj
-[b-social/prometheus-exposition-converter "0.1.0"]
+[b-social/prometheus-exposition-converter "0.1.1"]
 ```
 
 ## Documentation
